@@ -1,0 +1,62 @@
+# https://firehydrant.com/blog/develop-a-go-app-with-docker-compose/
+services:
+  db:
+    image: 'postgres'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    networks:
+      - app
+    volumes:
+      - db:/var/lib/postgresql/data
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  graph:
+    build:
+      dockerfile: Dockerfile
+      context: ./graph
+      target: dev
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:postgres@db/postgres?sslmode=disable
+      PORT: '5000'
+    env_file:
+      - .env
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - app
+    volumes:
+      - ./graph/dist:/app/dist
+      - ./graph/src:/app/src
+  web:
+    build:
+      dockerfile: Dockerfile
+      context: ./web
+      target: dev
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    depends_on:
+      - graph
+    restart: always
+    networks:
+      - app
+    volumes:
+      - ./web/src:/app/src
+      - ./web/public:/app/public
+
+  # $ docker compose exec db psql -U local-dev -d api
+networks:
+  app:
+    external: false
+
+volumes:
+  db:
+  cache:
