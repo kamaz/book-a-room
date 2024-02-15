@@ -6,13 +6,19 @@ const years = Array.from({ length: 10 }, (_, i) => i + new Date().getFullYear())
 
 type OnDateChange = (date: { day: number; month: number; year: number }) => void
 
-function Calendar({ onChange }: { onChange: OnDateChange }) {
+function Calendar({
+  onChange,
+  prefix,
+}: {
+  onChange: OnDateChange
+  prefix: string
+}) {
   const [day, setDay] = useState(new Date().getDate())
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [year, setYear] = useState(new Date().getFullYear())
   return (
     <div className='space-y-12'>
-      <div className='border-b border-white/10 pb-12'>
+      <div>
         <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12'>
           <div className='sm:col-span-3'>
             <label
@@ -23,6 +29,7 @@ function Calendar({ onChange }: { onChange: OnDateChange }) {
             </label>
             <div className='mt-2'>
               <select
+                data-testid={`${prefix}-day`}
                 name='day'
                 className='block w-full rounded-md border-0 bg-white/5 py-1.5  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black'
                 onChange={(e) => {
@@ -46,6 +53,7 @@ function Calendar({ onChange }: { onChange: OnDateChange }) {
             </label>
             <div className='mt-2'>
               <select
+                data-testid={`${prefix}-month`}
                 name='month'
                 className='block w-full rounded-md border-0 bg-white/5 py-1.5  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black'
                 onChange={(e) => {
@@ -69,7 +77,8 @@ function Calendar({ onChange }: { onChange: OnDateChange }) {
             </label>
             <div className='mt-2'>
               <select
-                name='day'
+                data-testid={`${prefix}-year`}
+                name='year'
                 className='block w-full rounded-md border-0 bg-white/5 py-1.5  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black'
                 onChange={(e) => {
                   onChange({ day, month, year: parseInt(e.target.value) })

@@ -27,10 +27,16 @@ const resolvers = {
     },
   },
   Query: {
-    rooms: (_, { sort: string }, { dataSources: { bookingDataSource } }) =>
-      bookingDataSource
+    rooms: (_, { filter }, { dataSources: { bookingDataSource } }) => {
+      if (filter) {
+        return bookingDataSource
+          .getRoomsByAvailability(filter.from, filter.to)
+          .then((rooms: Array<RoomEntity>) => rooms.map(toRoom))
+      }
+      return bookingDataSource
         .getRooms()
-        .then((rooms: Array<RoomEntity>) => rooms.map(toRoom)),
+        .then((rooms: Array<RoomEntity>) => rooms.map(toRoom))
+    },
     room: (_, { id }: { id: string }, { dataSources: { bookingDataSource } }) =>
       bookingDataSource.getRoomById(id).then(toRoom),
     booking: (

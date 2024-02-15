@@ -18,6 +18,17 @@ const GET_ROOMS = gql`
   }
 `
 
+const GET_ROOMS_WITH_FILTER = gql`
+  query GetRoomsWithFilter($from: String!, $to: String!) {
+    rooms(filter: { from: $from, to: $to }) {
+      id
+      name
+      price
+      image
+    }
+  }
+`
+
 const GET_ROOM = gql`
   query GetRoom($id: ID!) {
     room(id: $id) {
@@ -29,5 +40,5 @@ const GET_ROOM = gql`
   }
 `
 
-export { GET_ROOMS, GET_ROOM }
+export { GET_ROOMS, GET_ROOM, GET_ROOMS_WITH_FILTER }
 export type { Room }

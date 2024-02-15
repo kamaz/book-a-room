@@ -42,8 +42,13 @@ const typeDefs = `#graphql
     lastName: String!
   }  
 
+  input RoomFilter {
+    from: String! 
+    to: String!
+  }
+
   type Query {
-    rooms: [Room]!
+    rooms(filter: RoomFilter): [Room]!
     room(id: ID!): Room
     booking(id: ID!): Booking
   }
@@ -98,6 +103,7 @@ type BookingInput = {
 
 type BookingRepository = {
   getRooms(): Promise<Array<RoomEntity>>
+  getRoomsByAvailability(from: string, to: string): Promise<Array<RoomEntity>>
   getRoomById(id: string): Promise<RoomEntity>
   getBookingById(id: string): Promise<BookingEntity>
   saveBooking(booking: BookingInput): Promise<BookingEntity>

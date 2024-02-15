@@ -28,10 +28,26 @@ This is a simple hotel room booking application.
 - Checking for reverse date mapping (e.g., past to future) is skipped; we trust our users to use the interface correctly.
 - Using interfaces might seem like overkill, but past experiences have shown they are essential when extending functionality, especially on the graph layer.
 - Security concerns are not addressed.
+- Disable caching.
 - Retries and caching are skipped.
 - Missing types for GraphQL `query` and `mutation`.
 - Sharing types between GraphQL and the web, ensuring compatibility, is not implemented.
 - User or session management is not required.
+- Separate search from functionality from `postgres`.
+- No logging or monitoring considered
+- Before running e2e test you have to clean-up `room_availability` entry.
+
+```sql
+select * from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
+
+delete from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
+insert into room_availability values ('f32bb666-01a4-49c6-881d-70611f47441d', '[,]');
+
+select * from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
+
+delete from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
+insert into room_availability values ('f32bb666-01a4-49c6-881d-70611f47441d', '[,]');
+```
 
 ## How to run
 

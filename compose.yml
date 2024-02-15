@@ -12,7 +12,7 @@ services:
       - app
     volumes:
       - db:/var/lib/postgresql/data
-      # - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./migration/data.sql:/docker-entrypoint-initdb.d/data.sql
   graph:
     build:
       dockerfile: Dockerfile
