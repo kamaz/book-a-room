@@ -8,8 +8,8 @@ This is a simple hotel room booking application.
 
 ## TODO
 
-- [ ] Database design and data modelling about availability of hotel rooms and bookings
-- [ ] Feature to find available rooms by date range at least - if you can add more please do so.
+- [x] Database design and data modelling about availability of hotel rooms and bookings
+- [x] Feature to find available rooms by date range at least - if you can add more please do so.
 - [x] Feature to create a booking with basic details of customer for a hotel room.
 - [x] Bonus: automated testing
 
@@ -34,19 +34,14 @@ This is a simple hotel room booking application.
 - Sharing types between GraphQL and the web, ensuring compatibility, is not implemented.
 - User or session management is not required.
 - Separate search from functionality from `postgres`.
-- No logging or monitoring considered
-- Before running e2e test you have to clean-up `room_availability` entry.
+- No logging or monitoring is considered.
+- Before running `e2e` test you have to clean-up `room_availability` entry.
 
 ```sql
-select * from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
+select * from room_availability where room_id = '<replace with id of a room>';
 
-delete from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
-insert into room_availability values ('f32bb666-01a4-49c6-881d-70611f47441d', '[,]');
-
-select * from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
-
-delete from room_availability where room_id = 'f32bb666-01a4-49c6-881d-70611f47441d';
-insert into room_availability values ('f32bb666-01a4-49c6-881d-70611f47441d', '[,]');
+delete from room_availability where room_id = '<replace with id of a room>';
+insert into room_availability values ('<replace with id of a room>', '[,]');
 ```
 
 ## How to run
