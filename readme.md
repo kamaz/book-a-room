@@ -35,6 +35,7 @@ This is a simple hotel room booking application.
 - User or session management is not required.
 - Separate search from functionality from `postgres`.
 - No logging or monitoring is considered.
+- No analytics and auditing is considered.
 - Before running `e2e` test you have to clean-up `room_availability` entry.
 
 ```sql
@@ -55,6 +56,8 @@ Before running ensure you have following port available as they will be used by 
 ```shell
 docker compose up
 ```
+
+Once the application is up and running you can access it the browser by going to [http://localhost:3000](http://localhost:3000).
 
 ## Testing
 

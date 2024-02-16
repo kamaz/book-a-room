@@ -1,7 +1,7 @@
 CREATE EXTENSION btree_gist;
 
 CREATE TABLE room (
-  room_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  room_id uuid CONSTRAINT pk_room_id PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL,
   price NUMERIC NOT NULL,
   image VARCHAR(255) NOT NULL
@@ -170,13 +170,14 @@ FROM rows;
 
 
 CREATE TABLE booking (
-  booking_id uuid CONSTRAINT pk_booking PRIMARY KEY DEFAULT gen_random_uuid(),
+  booking_id uuid CONSTRAINT pk_booking_id PRIMARY KEY DEFAULT gen_random_uuid(),
   room_id uuid NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   email VARCHAR(255) NOT NULL,
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_room_booking FOREIGN KEY (room_id) REFERENCES room(room_id)
 );
 
